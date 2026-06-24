@@ -981,29 +981,27 @@ const App: React.FC = () => {
     switch (screen) {
       case 'ROLE_SELECTION':
         return (
-          <div className="flex flex-col items-center min-h-full h-full px-8 pt-20 pb-10 md:pt-28 md:pb-16 bg-white animate-fade-in overflow-y-auto overflow-x-hidden">
-            <div className="text-center space-y-5 shrink-0">
-              <div className="-mt-4 mb-4">
-                <div className="scale-150 origin-center">
-                  {AA2000_LOGO}
-                </div>
-              </div>
-              <h3 className="text-blue-900 font-black uppercase tracking-tighter text-base md:text-lg mt-20 mb-16">Select Portal Role</h3>
+          <div className="flex flex-col items-center min-h-full h-full px-6 pt-14 pb-10 bg-white animate-fade-in overflow-y-auto overflow-x-hidden">
+            <div className="text-center space-y-2 shrink-0">
+              {AA2000_LOGO}
+              <p className="text-blue-900 text-sm font-bold mt-2">Select your role to continue</p>
             </div>
 
-            <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 items-center max-w-2xl shrink-0 mt-4 mb-4">
+            <div className="w-full max-w-lg mt-8 space-y-4">
               <button
                 onClick={() => {
                   setUserRole('TECHNICIAN');
                   setScreen('START');
                 }}
-                className="w-full group p-6 bg-blue-900 rounded-[2rem] shadow-xl hover:bg-blue-800 transition-all active:scale-95 text-white flex flex-col items-center gap-1"
+                className="w-full group p-5 bg-blue-900 rounded-2xl shadow-lg hover:bg-blue-800 transition-all active:scale-[0.98] text-white text-left flex items-center gap-4"
               >
-                <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center mb-1">
-                  <i className="fas fa-tools text-2xl"></i>
+                <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center shrink-0">
+                  <i className="fas fa-tools text-xl"></i>
                 </div>
-                <span className="text-lg font-black tracking-tight uppercase">TECHNICIAN</span>
-                <span className="text-blue-300 text-[10px] font-bold uppercase tracking-widest">Surveys &amp; Audits</span>
+                <div>
+                  <p className="font-black text-sm">Technician</p>
+                  <p className="text-blue-200 text-xs leading-tight">Conduct site surveys, fill audit forms, and submit reports</p>
+                </div>
               </button>
 
               <button
@@ -1013,17 +1011,19 @@ const App: React.FC = () => {
                   setUser(null);
                   setScreen('ADMIN_LOGIN');
                 }}
-                className="w-full group p-6 bg-white border-2 border-blue-900 rounded-[2rem] shadow-lg hover:bg-blue-50 transition-all active:scale-95 text-blue-900 flex flex-col items-center gap-1"
+                className="w-full group p-5 bg-white border-2 border-blue-900 rounded-2xl shadow-sm hover:bg-blue-50 transition-all active:scale-[0.98] text-blue-900 text-left flex items-center gap-4"
               >
-                <div className="w-12 h-12 bg-blue-900/10 rounded-2xl flex items-center justify-center mb-1">
-                  <i className="fas fa-briefcase text-xl"></i>
+                <div className="w-12 h-12 bg-blue-900/10 rounded-xl flex items-center justify-center shrink-0">
+                  <i className="fas fa-chart-bar text-xl"></i>
                 </div>
-                <span className="text-lg font-black tracking-tight uppercase text-center">Sales &amp; Admin</span>
-                <span className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">Reports &amp; Remarks</span>
+                <div>
+                  <p className="font-black text-sm">Sales &amp; Admin</p>
+                  <p className="text-slate-500 text-xs leading-tight">Create projects, review reports, and finalize estimates</p>
+                </div>
               </button>
             </div>
 
-            <p className="text-slate-400 text-[10px] text-center font-bold uppercase tracking-widest pb-2 mt-10 shrink-0">
+            <p className="text-slate-300 text-[10px] text-center font-bold uppercase tracking-widest mt-auto pt-10">
               AA2000 Security &amp; Technology Solutions
             </p>
           </div>

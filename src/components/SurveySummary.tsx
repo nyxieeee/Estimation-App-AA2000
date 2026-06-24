@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Project, CCTVSurveyData, FireAlarmSurveyData, AccessControlSurveyData, BurglarAlarmSurveyData, FireProtectionSurveyData, OtherSurveyData, SurveyType, EstimationDetail } from '../types';
+import { Project, CCTVSurveyData, FireAlarmSurveyData, AccessControlSurveyData, BurglarAlarmSurveyData, FireProtectionSurveyData, OtherSurveyData, SurveyType, EstimationDetail, PROJECT_STATUS_DISPLAY } from '../types';
 import { processTitleCase } from '../utils/voiceProcessing';
 import { computeAccessControlMeanCosts } from '../utils/accessControlMeanPricing';
 import { computeCctvMeanCosts, CCTV_MEAN } from '../utils/cctvMeanPricing';
@@ -1131,7 +1131,7 @@ const SurveySummary: React.FC<Props> = ({ userRole, project, cctvData, faData, f
             <div className={`flex justify-between items-center ${canViewSensitive ? 'border-b border-slate-200 pb-1' : ''}`}>
               <span className="text-slate-400 text-xs font-black uppercase tracking-widest">Status</span>
               <span className="font-normal text-slate-900 text-sm ml-2 text-right truncate">
-                {project.status === 'Completed' ? 'Completed by Technician' : (project.status || 'In Progress')}
+                {PROJECT_STATUS_DISPLAY[project.status] || project.status || 'In Progress'}
               </span>
             </div>
             {project.finalization?.outcome && (

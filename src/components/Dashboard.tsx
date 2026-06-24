@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { User, Project, SurveyType } from '../types';
+import { User, Project, SurveyType, PROJECT_STATUS_DISPLAY } from '../types';
 import type { ThemeMode } from './Profile';
 import type { ProjectSortMode } from './App';
 import PortalLayout, { PortalNavKey } from './PortalLayout';
@@ -333,7 +333,7 @@ const Dashboard: React.FC<Props> = ({
             <div className="space-y-2 pb-4">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <h1 className="text-2xl md:text-4xl font-black text-blue-900 dark:text-blue-400">
-                  {activeSection === 'ONGOING' ? 'Ongoing' : activeSection === 'UPCOMING' ? 'Upcoming' : 'History'}
+                  {activeSection === 'ONGOING' ? 'Active' : activeSection === 'UPCOMING' ? 'Scheduled' : 'Archive'}
                 </h1>
                 <label className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
                   Sort
@@ -410,6 +410,7 @@ const Dashboard: React.FC<Props> = ({
                 const badgeCount = Math.max(scopeCount || 0, 1);
                 const scheduleRaw = project.startDate || record.timestamp;
                 const scheduleIso = toIsoDate(scheduleRaw) || '—';
+                const statusDisplay = PROJECT_STATUS_DISPLAY[project.status] || project.status || 'In Progress';
                 const activityLabel =
                   project.projectSurveyTypes?.map((t) => String(t).toUpperCase()).join(' / ') || 'SITE SURVEY / INSPECTION';
                 const leadName =
@@ -431,8 +432,6 @@ const Dashboard: React.FC<Props> = ({
                   }
                   return matched;
                 })();
-                const statusLine =
-                  project.status === 'Completed' ? 'Completed by technician' : project.status || 'In progress';
                 const cardInteractive = isTechnicianHistory
                   ? 'cursor-pointer transition-[box-shadow,transform] hover:shadow-md active:scale-[0.99]'
                   : '';
@@ -494,7 +493,7 @@ const Dashboard: React.FC<Props> = ({
                           )}
                         </div>
                         <p className="text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
-                          Status · {statusLine}
+                          {statusDisplay}
                         </p>
                       </div>
 
@@ -683,14 +682,14 @@ const Dashboard: React.FC<Props> = ({
               >
                 <div className="rounded-2xl border border-slate-200/90 bg-slate-100/80 p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900/60">
                   <p className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-950 dark:text-blue-200">
-                    Workspace
-                  </p>
-                  <p className="mt-1 text-[11px] font-medium text-slate-600 dark:text-slate-400">
-                    Totals across all saved projects
-                  </p>
+                    Overview
+                    </p>
+                    <p className="mt-1 text-[11px] font-medium text-slate-600 dark:text-slate-400">
+                      Projects by status
+                    </p>
                   <ul className="mt-4 space-y-2">
                     <li className="flex items-center justify-between gap-3 rounded-xl bg-white/90 px-3 py-2.5 dark:bg-slate-800/80">
-                      <span className="text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">Ongoing</span>
+                      <span className="text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">Active</span>
                       <span
                         className={`text-lg font-black tabular-nums ${activeSection === 'ONGOING' ? 'text-blue-900 dark:text-blue-300' : 'text-blue-950 dark:text-slate-100'}`}
                       >
@@ -698,7 +697,7 @@ const Dashboard: React.FC<Props> = ({
                       </span>
                     </li>
                     <li className="flex items-center justify-between gap-3 rounded-xl bg-white/90 px-3 py-2.5 dark:bg-slate-800/80">
-                      <span className="text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">Upcoming</span>
+                      <span className="text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">Scheduled</span>
                       <span
                         className={`text-lg font-black tabular-nums ${activeSection === 'UPCOMING' ? 'text-blue-900 dark:text-blue-300' : 'text-blue-950 dark:text-slate-100'}`}
                       >
@@ -706,7 +705,7 @@ const Dashboard: React.FC<Props> = ({
                       </span>
                     </li>
                     <li className="flex items-center justify-between gap-3 rounded-xl bg-white/90 px-3 py-2.5 dark:bg-slate-800/80">
-                      <span className="text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">History</span>
+                      <span className="text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">Archive</span>
                       <span
                         className={`text-lg font-black tabular-nums ${activeSection === 'HISTORY' ? 'text-blue-900 dark:text-blue-300' : 'text-blue-950 dark:text-slate-100'}`}
                       >
@@ -732,13 +731,12 @@ const Dashboard: React.FC<Props> = ({
                       {workspaceSnapshot.pendingResponse > 0 ? (
                         <>
                           <span className="font-bold text-amber-900 dark:text-amber-200">
-                            {workspaceSnapshot.pendingResponse} ongoing{' '}
-                            {workspaceSnapshot.pendingResponse === 1 ? 'job needs' : 'jobs need'}
+                            {workspaceSnapshot.pendingResponse}
                           </span>{' '}
-                          accept or decline.
+                          {workspaceSnapshot.pendingResponse === 1 ? 'project needs' : 'projects need'} your response.
                         </>
                       ) : (
-                        'No open accept/decline decisions for your ongoing jobs.'
+                        'No pending responses needed.'
                       )}
                     </p>
                   </div>
@@ -748,10 +746,9 @@ const Dashboard: React.FC<Props> = ({
                   <p className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-950 dark:text-blue-200">
                     Tip
                   </p>
-                  <p className="mt-2 text-[11px] leading-relaxed text-slate-600 dark:text-slate-400">
-                    Accept a job to unlock <span className="font-bold text-blue-900 dark:text-blue-300">Start audit</span> and
-                    choose the survey system to work on.
-                  </p>
+                    <p className="mt-2 text-[11px] leading-relaxed text-slate-600 dark:text-slate-400">
+                      Accept a project to start your survey.
+                    </p>
                 </div>
               </aside>
             </div>

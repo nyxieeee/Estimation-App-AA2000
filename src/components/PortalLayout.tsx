@@ -242,11 +242,11 @@ const PortalLayout: React.FC<Props> = ({
   }, [suppressSidebar]);
 
   const navItems: { key: PortalNavKey; label: string; icon: string; adminOnly?: boolean }[] = [
-    { key: 'ongoing', label: 'Ongoing', icon: 'fa-circle' },
-    { key: 'upcoming', label: 'Upcoming', icon: 'fa-clock' },
-    { key: 'history', label: 'History', icon: 'fa-history' },
-    { key: 'create', label: 'Create', icon: 'fa-plus-circle', adminOnly: true },
-    { key: 'finalized', label: 'Finalized', icon: 'fa-file-contract', adminOnly: true },
+    { key: 'ongoing', label: 'Active', icon: 'fa-play-circle' },
+    { key: 'upcoming', label: 'Scheduled', icon: 'fa-calendar-alt' },
+    { key: 'history', label: 'Archive', icon: 'fa-archive' },
+    { key: 'create', label: 'New Project', icon: 'fa-plus-circle', adminOnly: true },
+    { key: 'finalized', label: 'Closed', icon: 'fa-check-circle', adminOnly: true },
   ];
 
   const visibleNav = navItems.filter((i) => !i.adminOnly || userRole === 'ADMIN');

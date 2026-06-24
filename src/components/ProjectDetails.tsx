@@ -981,7 +981,7 @@ const ProjectDetails: React.FC<Props> = ({
         <>
           <div className="mb-5 rounded-2xl border-2 border-blue-900/35 bg-gradient-to-br from-blue-50/90 via-white to-white p-4 shadow-sm ring-1 ring-blue-900/10 dark:border-blue-800/55 dark:from-blue-950/50 dark:via-slate-900 dark:to-slate-950 dark:ring-blue-900/25">
             <p className="mb-3 text-[10px] font-black uppercase tracking-wide text-blue-900 dark:text-blue-300">
-              Company directory
+              Select or add a client
             </p>
             <div className="flex flex-col gap-2 sm:flex-row">
               <select
@@ -990,7 +990,7 @@ const ProjectDetails: React.FC<Props> = ({
                 onChange={(e) => handleStoredClientSelect(e.target.value)}
                 className="h-[3.125rem] rounded-xl border-2 border-slate-200 bg-white px-3 text-[10px] font-black uppercase text-slate-700 focus:outline-none focus:border-blue-900 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200 sm:w-1/2"
               >
-                <option value="">Existing clients</option>
+                <option value="">Pick a saved client</option>
                 {storedClients.map((c) => (
                   <option key={c.id} value={c.id}>
                     {c.companyName}
@@ -1002,7 +1002,7 @@ const ProjectDetails: React.FC<Props> = ({
                 onClick={handleOpenNewClientModal}
                 className="h-[3.125rem] rounded-xl border-2 border-blue-900 bg-blue-900/[0.06] px-4 text-[10px] font-black uppercase tracking-wide text-blue-900 transition hover:bg-blue-900/10 dark:border-blue-500 dark:bg-blue-950/50 dark:text-blue-200 dark:hover:bg-blue-900/35 sm:w-1/2"
               >
-                New Client
+                Add New Client
               </button>
             </div>
           </div>
@@ -1107,7 +1107,7 @@ const ProjectDetails: React.FC<Props> = ({
             </div>
             <div className="md:col-span-2">
               <label htmlFor="client-contact-person" className="mb-1 ml-1 block text-[10px] font-bold uppercase text-slate-400">
-                Client Name (Contact Person)
+                Contact Person
               </label>
               <div className="relative">
                 <input
@@ -1129,7 +1129,7 @@ const ProjectDetails: React.FC<Props> = ({
             </div>
             <div className="md:col-span-2 rounded-2xl border-2 border-slate-100 p-4 dark:border-slate-700">
               <p className={`mb-2 text-[10px] font-black uppercase tracking-wide ${showErrors && selectedProjectSurveys.length === 0 ? 'text-red-600' : 'text-slate-400'}`}>
-                Project Survey Scope
+                Systems to Survey
               </p>
               <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                 {ALL_SURVEY_TYPES_ORDERED.map((st) => (
@@ -1164,14 +1164,14 @@ const ProjectDetails: React.FC<Props> = ({
               </div>
             </div>
             <div className="md:col-span-2 rounded-2xl border-2 border-slate-100 p-4 dark:border-slate-700">
-              <p className="text-[10px] font-black uppercase tracking-wide text-slate-400">
-                Building information will be completed by the assigned technician during survey.
+              <p className="text-[10px] font-medium text-slate-400">
+                Building details will be filled by the technician on site.
               </p>
             </div>
             <div className="md:col-span-2">
               <div className="flex items-end gap-3">
                 <div className="w-3/4 min-w-0">
-                  <label className="mb-1 ml-1 block text-[10px] font-bold uppercase tracking-wider text-slate-400">Project Location Name</label>
+                  <label className="mb-1 ml-1 block text-[10px] font-bold uppercase tracking-wider text-slate-400">Location Name</label>
                   <div className="relative">
                     <input
                       type="text"
@@ -1210,7 +1210,7 @@ const ProjectDetails: React.FC<Props> = ({
               />
             </div>
             <div>
-              <label className="mb-1 ml-1 block text-[10px] font-bold uppercase text-slate-400">Required Manpower</label>
+              <label className="mb-1 ml-1 block text-[10px] font-bold uppercase text-slate-400">Number of Technicians</label>
               <input
                 type="number"
                 min={1}

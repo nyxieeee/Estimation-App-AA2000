@@ -11,6 +11,16 @@ export enum SurveyType {
   OTHER = 'Other'
 }
 
+export const PROJECT_STATUS_DISPLAY: Record<string, string> = {
+  'In Progress': 'In Progress',
+  'Pending Review': 'Pending Review',
+  'Rejected': 'Rejected',
+  'Finalized': 'Approved',
+  'Completed': 'Completed',
+  'Finalized - Approved': 'Approved',
+  'Finalized - Rejected': 'Rejected',
+};
+
 export type FinalizationOutcome = 'APPROVED' | 'REJECTED';
 
 export interface FinalizationActionLog {
